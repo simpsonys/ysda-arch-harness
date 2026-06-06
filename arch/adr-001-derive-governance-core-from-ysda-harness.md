@@ -1,0 +1,31 @@
+# ADR-001 — 거버넌스 코어를 ysda-harness(개인/코딩) v2.8.9에서 파생
+
+- **Status:** Accepted
+- **Date:** 2026-06-06
+- **Owner Approval:** granted 2026-06-06
+- **Drivers (QS):** (메타 결정 — 하네스 자체의 Maintainability/Consistency)
+
+## Context
+업무용 설계 harness를 새로 만들되, 그동안 개인용 harness에서 끌어올린 거버넌스(정합성/추적성/closure)를 버리지 않고
+재사용하고자 한다. 동시에 코딩 lifecycle은 설계 lifecycle로 대체해야 한다.
+
+## Decision drivers
+- 검증된 거버넌스 재사용(중복 발명 회피) — Maintainability.
+- 두 harness 간 개선 이식 가능성(예: release 일관성 게이트) — Consistency.
+- 설계 우선 특성 반영 — Fitness for purpose.
+
+## Considered options
+| 옵션 | 재사용 | 설계 적합성 | 복잡도 | 비고 |
+|---|---|---|---|---|
+| **A. v2.8.9 거버넌스 코어 파생 + 설계 mode 신규(권장)** | 높음 | 높음 | 중 | 채택 |
+| B. 백지에서 신규 설계 | 낮음 | 높음 | 높음 | 거버넌스 재발명 |
+| C. 개인 harness에 design mode만 추가 | 높음 | 중 | 중 | 코딩/설계 혼재로 §A0 위반 |
+
+## Decision brief
+- **Recommended:** A. Common §A 거버넌스를 v2.8.9에서 파생, 코딩 lifecycle을 설계 lifecycle(§D)로 대체, 별도 family로 분리.
+- **Why:** 거버넌스 성숙도를 즉시 확보하면서 설계 적합성을 유지, 한 리포에 용도 혼재를 피함(personal-vs-arch 분리 원칙).
+- **Trade-offs accepted:** 두 harness의 거버넌스가 분기될 수 있음 → 개선은 양쪽 이식 원칙으로 관리.
+
+## Consequences
+- §A 거버넌스는 personal harness와 의도적으로 유사(미러/closure/traceability/release 게이트).
+- 코딩/테스트 중심 규칙은 제외, 설계/품질/다이어그램 규칙 추가.

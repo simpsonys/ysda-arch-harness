@@ -1,0 +1,17 @@
+{
+  "harness_family": "ysda-arch-harness",
+  "harness_version": "1.0.0",
+  "applied_mode": "self-hosted",
+  "adoption_depth": null,
+  "applied_date": "2026-06-06",
+  "canonical_root": "<local path>",
+  "source_common": "standards/ysda-arch-harness-common.md",
+  "source_mode": "standards/ysda-arch-design-standard.md",
+  "common_checksum": "self-hosted",
+  "mode_checksum": "self-hosted",
+  "agents_md_mirror_version": "1.0.0",
+  "notes": [
+    "Canonical arch-harness self-hosting. Active standards live in standards/.",
+    "Governance core derived from ysda-harness (personal) v2.8.9."
+  ]
+}
