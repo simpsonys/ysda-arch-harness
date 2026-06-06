@@ -30,8 +30,8 @@ flowchart TD
 ## QS 영향 분석
 | QS | 영향(정성) | 추정(정량) | trade-off |
 |---|---|---|---|
-| QS-001 Latency | ↓ | p95 ~<n> ms | memory +<n> MB |
-| QS-002 Memory | ↑ | +<n> MB/inst | budget 내 여부 |
+| QS-001 Latency | ↓ | `p95 ~<TBD>` | memory 영향 `<TBD>` |
+| QS-002 Memory | ↑ | `<TBD>` | budget 내 여부 |
 
 ## Non-Goals
 - <이 후보가 다루지 않는 범위>

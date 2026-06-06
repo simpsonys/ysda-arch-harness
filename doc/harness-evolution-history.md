@@ -1,5 +1,11 @@
 # Arch Harness 진화 이력
 
+## v1.0.1 — 업무 적용 전 일관성 개선
+* **안전:** 실제 제품 목표처럼 보이는 sample latency/memory 수치를 placeholder로 교체하고 승인 전 `<TBD>` 정책 추가.
+* **정합성:** current version Accepted ADR을 release 필수 조건으로 명문화하고 `archdev check`와 일치시킴.
+* **Lifecycle:** canonical `arch/` 경로, artifact lifecycle matrix, Mermaid text/ADR/QS sync 규칙 추가.
+* **Scoped:** host repo unchanged/read-only/no commit/no push 기본 sidecar와 redaction/handoff 템플릿 추가.
+
 ## v1.0.0 — 설계 전용 하네스 분기
 * **배경:** 개인용 `ysda-harness`(코딩)에 모든 요구를 넣기보다, 용도별로 harness를 분리. 업무용은 상품화 설계용으로,
   품질속성(특히 latency·memory)과 설계 문서가 코드보다 우선.

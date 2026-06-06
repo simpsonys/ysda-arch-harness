@@ -1,4 +1,4 @@
-# YSDA Arch Harness Common Core v1.0.0
+# YSDA Arch Harness Common Core v1.0.1
 
 > Single source of the reusable, project-neutral rules shared by the YSDA Arch Harness (architecture/design)
 > mode adapters. The governance core is **derived from YSDA Harness (personal/coding) v2.8.9** and re-oriented
@@ -33,7 +33,7 @@ Project-local home is `.ysda-arch-harness/` (frozen `harness-common.md` + `harne
 ```json
 {
   "harness_family": "ysda-arch-harness",
-  "harness_version": "1.0.0",
+  "harness_version": "1.0.1",
   "applied_mode": "design | audit | scoped | upgrade | self-hosted",
   "applied_date": "YYYY-MM-DD",
   "canonical_root": "<git url or local sync path>",
@@ -41,17 +41,18 @@ Project-local home is `.ysda-arch-harness/` (frozen `harness-common.md` + `harne
   "source_mode": "standards/ysda-arch-design-standard.md",
   "common_checksum": "<sha256>",
   "mode_checksum": "<sha256>",
-  "agents_md_mirror_version": "1.0.0",
+  "agents_md_mirror_version": "1.0.1",
   "notes": ["Project-local snapshot. Update through harness init/upgrade, not manual edits."]
 }
 ```
 
 Active canonical files are **versionless** in filename; version lives in the header + `harness-version.json`.
 History is carried by Git and `doc/harness-evolution-history.md`, not by hoarding `*_v1_*` copies (`doc/` for
-internal docs; `docs/` only for a published site).
+internal docs; `docs/` only for a published site). Release/version ADRs are the explicit exception: their filename
+contains the release tag so §A9.1 can enforce the approved baseline mechanically.
 
 ## A4. AGENTS.md runtime mirror + version marker
-The mirrored runtime block opens with `<!-- ysda-arch-runtime-mirror: Common v1.0.0 (A31/A9/A20/A18) -->`, and the
+The mirrored runtime block opens with `<!-- ysda-arch-runtime-mirror: Common v1.0.1 (A31/A9/A20/A18) -->`, and the
 same version is stamped as `agents_md_mirror_version`. A lagging marker means the runtime block is stale and must be
 re-mirrored. (Inherited from personal harness v2.8.7.)
 
@@ -66,33 +67,50 @@ design baseline, or authorizes a downstream code hand-off. Design roles: Owner, 
 Modeler, Reviewer/Evaluator (no code Implementer/QA in this harness).
 
 ## A7. Source of truth & artifact set
+Canonical applied-project artifacts live under `arch/`. The top-level `quality/` directory is the harness's own
+quality vocabulary and placeholder guidance; it is never the source of product target values.
+
 ```text
 arch/
-  system.md                 # system + business drivers (Phase 1)
-  usecases.md               # use case list (Phase 2); usecase/UC-nnn.md for detail
+  architecture-brief.md     # system, drivers, constraints, consolidated architecture
+  usecases.md               # use case index (Phase 2)
+  usecases/
+    UC-nnn-<title>.md        # detailed use cases
   domain/model.md           # domain model (Phase 3)
   quality/
     quality-scenarios.md    # QS index (Phase 4)
     QS-nnn-<title>.md        # one quality attribute scenario each (6-part)
-    qualities.md            # selected/prioritized quality requirements
-  candidate/
-    candidates.md           # candidate index
-    QS-nnn-<title>.md        # per-driver candidate structures (behavioral + dev views)
-  decision/
-    adr-nnn-<title>.md       # ADRs (MADR + driver matrix, §A8)
-    evaluations.md           # candidate evaluation (ATAM-style, §D6)
-  architecture.md           # consolidated architecture description (arc42/C4, §D7)
+    latency-budget.md        # owner/reviewer-approved product latency values
+    memory-budget.md         # owner/reviewer-approved product memory values
+  views/
+    system-context.md
+    container-view.md
+    component-view.md
+    runtime-view.md
+    deployment-view.md
+    dataflow-view.md
+    latency-critical-path.md
+    memory-lifecycle.md
+  candidates/
+    candidate-nnn-<title>.md
+    comparison-matrix.md
   evaluation/
-    decisions.md             # identified architectural decisions
-    evaluation.md            # final quality-attribute satisfaction evaluation (Phase 8)
+    architecture-evaluation.md
+    risk-register.md
+    open-questions.md
+    review-log.md
+  adr-nnn-<title>.md         # ADRs (MADR + driver matrix, §A8)
 ```
+
+Do not introduce aliases such as `usecase/`, `candidate/`, `decision/`, `adr/`, or top-level project `views/`.
+See `standards/artifact-lifecycle.md` for create/update/closure conditions.
 
 ## A8. ADR discipline (2-step + driver matrix)
 Every non-trivial decision is an ADR (`templates/adr.md`, MADR-style):
 1. **Proposed**: context, decision drivers **linked to QS-nnn**, ≥2 options in a driver/quality-attribute matrix
    with pros/cons, recommended option + Decision brief.
 2. **Accepted/Rejected/Superseded**: only the **owner** sets `Accepted`. The decision is woven into
-   `architecture.md` **after** acceptance, never before.
+   the accepted decision into `architecture-brief.md` and related views **after** acceptance, never before.
 Matrix columns must include the prioritized quality attributes for the decision (e.g. Latency, Memory,
 Modifiability) so every decision traces to the driver it serves.
 
@@ -109,9 +127,12 @@ Before any completion commit:
 8. **Stage & Inspect** before commit.
 
 ### A9.1 Release/version consistency gate (mechanical)
-`archdev check` fails if the ADR(s) matching the current `harness_version` are not `Accepted` (a version stamp must
-not run ahead of approval) and if `traceability-matrix.md`/`artifact-registry.md`/`reports/progress.md`/
-`doc/harness-evolution-history.md` don't reference the current version. Run it before every completion commit.
+For this self-hosted harness, **a release/version ADR is required**. `archdev check` fails when no ADR filename
+contains the current `harness_version`, when a matching ADR is not `Accepted`, when its `Owner Approval` record is
+not `granted`, or when
+`traceability-matrix.md`/`artifact-registry.md`/`reports/progress.md`/`doc/harness-evolution-history.md` do not
+reference the current version. A version stamp must not run ahead of owner approval. Run it before every completion
+commit.
 (Adapted from personal harness v2.8.9.)
 
 ## A10. Concept capture & A11. Q&A logging
@@ -127,9 +148,10 @@ Architecture element / Diagram → Evaluation result. Every *prioritized* QS tra
 before a design baseline (§D8).
 
 ## A14. Quality attribute model
-`quality/quality-attribute-model.md` defines the quality vocabulary (ISO/IEC 25010 based) and the first-class
-**latency budget** and **memory budget** for this product family. Every performance QS references a concrete number
-in those budgets (no "fast enough").
+`quality/quality-attribute-model.md` defines the harness quality vocabulary and placeholder policy. Applied product
+targets live in `arch/quality/latency-budget.md` and `arch/quality/memory-budget.md`. Every performance QS references
+an owner/reviewer-approved value in those budgets; use `<TBD>` until approval. Never treat a sample value as a
+product target.
 
 ## A15. Lightweight design escape hatch
 Depth modes Lite/Standard/Full (§D3). Lite still needs ≥1 prioritized QS, ≥1 ADR with a driver matrix, ≥1 context
@@ -144,17 +166,22 @@ Diagrams are **mermaid** embedded in markdown (not image binaries) so they versi
 declares its **view** (context/container/component/runtime-sequence/deployment/state/domain-ERD per
 `templates/mermaid-cookbook.md`), carries a one-line **intent caption**, and uses C4 layering rather than one giant
 diagram. A structural prose claim without a diagram, or a diagram without a caption, fails §A9.
+A diagram is not closed if it contradicts the text, ADR, or quality scenario it references. Latency critical-path
+and memory lifecycle diagrams must link the related QS and budget artifact. Required view-specific create/update
+rules are in `templates/mermaid-cookbook.md`.
 
 ## A19. Compact output
 Owner reports: what changed / which phase / open decisions / next action. Long reasoning lives in artifacts.
 
 ## A20. Git & confidentiality safety
 Never `git push` without explicit owner approval. No destructive data/history op without an ADR. For Scoped/handoff
-bundles (§D10), redact internal infra paths/identifiers (incl. `canonical_root`/`source_*`) and secrets before
-sharing — critical for 업무용, where design docs cross teams.
+bundles (§D10), default to a read-only sidecar that leaves the host repo unchanged, creates no commit, and performs
+no push. Redact internal infra paths/identifiers (incl. `canonical_root`/`source_*`), secrets, raw confidential
+source, unapproved performance values, and private partner details before sharing. Use
+`templates/scoped-sidecar/`.
 
 ## A30. Downstream code hand-off (bridge to coding harness)
-When the owner authorizes implementation, produce a **hand-off package** (accepted `architecture.md`, module view,
+When the owner authorizes implementation, produce a **hand-off package** (accepted `architecture-brief.md`, module view,
 latency/memory budgets, a generated `AGENTS.md` for the downstream repo) — not code. The downstream repo adopts the
 **personal/coding `ysda-harness`** to build. Design here, build there.
 
@@ -170,6 +197,9 @@ latency/memory budgets, a generated `AGENTS.md` for the downstream repo) — not
 
 ## Changelog
 ```text
+v1.0.1 — consistency polish for business use.
+  Added canonical artifact paths, strict release ADR governance, lifecycle matrix, scoped sidecars, placeholder-only
+  sample budgets, and diagram/text/QS synchronization rules.
 v1.0.0 — initial Arch Harness Common Core.
   Forked governance core from personal ysda-harness v2.8.9 (Common/mode split, AGENTS mirror+marker, Artifact
   Closure Gate + release/version consistency gate, ROLES/IO-CONTRACT/traceability/qna, git+handoff redaction,

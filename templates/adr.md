@@ -22,7 +22,7 @@
 ## Decision brief
 - **Recommended:** <옵션 A>
 - **Why:** <우선순위 QS 대비 근거>
-- **Trade-offs accepted:** <예: latency↓ 대신 memory +X MB (Memory Budget 내)>
+- **Trade-offs accepted:** <예: latency 개선 대신 memory 영향 `<TBD>`; 승인 Memory Budget 내 여부>
 
 ## Consequences
 - <긍정/부정 결과, 후속 결정/리스크>

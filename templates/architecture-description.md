@@ -1,4 +1,4 @@
-# 아키텍처 명세 (architecture.md) — arc42 경량 + C4
+# 아키텍처 브리프 (`arch/architecture-brief.md`) — arc42 경량 + C4
 
 ## 1. Introduction & Goals
 상위 품질 목표 = 우선순위 QS 요약 (QS-001 Latency, QS-002 Memory ...).
@@ -43,10 +43,10 @@ sequenceDiagram
 > 런타임 배치와 자원/메모리 배치를 보여준다.
 ```mermaid
 flowchart LR
-  subgraph Node1[Pod x N]
-    inst[Service instance ≤512MB RSS]
+  subgraph Device[TV Device: <DEVICE_CLASS>]
+    inst[On-Device Runtime: <MAX_RSS_MB>]
   end
-  lb[Load Balancer] --> Node1
+  cloud[Cloud AI] --> Device
 ```
 
 ## 8. Crosscutting Concepts

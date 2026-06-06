@@ -1,4 +1,4 @@
-# 시스템 정의 (system.md)
+# 시스템 정의 (`arch/architecture-brief.md`)
 
 ## 1. 목적 & 범위
 <무엇을 왜 만드는가>

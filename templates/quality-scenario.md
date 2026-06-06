@@ -12,7 +12,7 @@
 | **Artifact** (대상) | <예: 조회 API / 캐시 / 전체 시스템> |
 | **Environment** (환경) | <예: 정상부하 정상상태 / 피크 / 장애 복구 중> |
 | **Response** (응답) | <예: 요청을 처리하고 결과 반환> |
-| **Response Measure** (측정) | <budget 인용: 예 "p95 ≤ 80 ms (Latency Budget End-to-end)"> |
+| **Response Measure** (측정) | <`arch/quality/` 승인 budget 인용: `p95 ≤ <P95_TARGET_MS>` 또는 `<TBD>`> |
 
 ## Non-Goals
 - <이 QS가 다루지 않는 것>

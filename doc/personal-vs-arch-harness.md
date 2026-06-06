@@ -5,7 +5,7 @@
 | 목적 | 기능 구현, 코드 산출 | 아키텍처 설계, 의사결정·다이어그램·평가 산출 |
 | 1순위 | 동작하는 코드 + 테스트 | 품질속성(특히 latency/memory) 충족 설계 |
 | 게이트 | Implementation Readiness Gate | Design Baseline 게이트(§D8) |
-| 핵심 산출물 | task/code/test | QS / ADR / architecture.md / 평가 |
+| 핵심 산출물 | task/code/test | QS / ADR / architecture-brief + views / 평가 |
 | 다이어그램 | 보조 | **mermaid-first 필수**(C4/runtime/deployment) |
 | 코드 | 목표 | 다운스트림 hand-off(§A30), 본체 아님 |
 | 공유 | 개인 | 팀 간 핸드오프(redaction 중요) |

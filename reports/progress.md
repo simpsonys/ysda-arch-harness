@@ -7,3 +7,10 @@
   mermaid-cookbook), 방법론 레퍼런스, archdev check.
 * **검증:** `archdev check` PASS, 단위 테스트 PASS.
 * **커밋(예정):** `feat: bootstrap ysda-arch-harness v1.0.0 (design harness)`
+
+## 2026-06-06 — v1.0.1 업무 적용 전 일관성 개선
+* **작업:** sample 성능 수치를 placeholder로 교체, strict release ADR 정책 정합화, canonical `arch/` 경로,
+  artifact lifecycle matrix, Mermaid sync 규칙, read-only scoped sidecar 템플릿 추가.
+* **검증:** `archdev list/info/check` PASS, 단위 테스트 11개 PASS, `git diff --check` PASS,
+  sample target/금지 경로/비공개 용어 검색 결과 없음.
+* **결정:** [ADR-002](../arch/adr-002-v1.0.1-consistency-polish.md) Accepted.

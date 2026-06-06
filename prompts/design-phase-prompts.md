@@ -26,7 +26,7 @@
 - (owner) `ADR-00x를 Accepted로 승인.`
 
 **Phase 7 — 구조 명세**
-- `채택 결정으로 architecture.md를 arc42/C4 스켈레톤으로 통합 명세해줘.`
+- `채택 결정으로 arch/architecture-brief.md와 arch/views/를 arc42/C4 스켈레톤으로 통합 명세해줘.`
 
 **Phase 8 — 구조 평가**
 - `구조를 ATAM 방식으로 평가하고 우선순위 QS를 budget 대비 판정해줘. Design Baseline 게이트 점검.`
