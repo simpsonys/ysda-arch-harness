@@ -33,3 +33,20 @@
 
 **Hand-off (owner 승인)**
 - `Design Baseline 기준으로 다운스트림 코딩 하네스용 hand-off 패키지를 만들어줘.`
+
+
+---
+
+## 업무용 보강 프롬프트
+
+**Source ingestion — 요약 금지**
+- `첨부/원본 자료를 arch/sources/originals에 보존한 것으로 간주하고 Source Record를 작성해줘. 단순 요약이 아니라 Source-to-Design Impact를 반드시 포함해. Requirements, Constraints, Risks, Assumptions, Open Questions, Required Artifacts, Stakeholder Action까지 뽑고 workflow/artifact-coverage-matrix.md 업데이트 항목도 제안해줘.`
+
+**Artifact coverage 점검**
+- `현재 Source Record와 요구사항을 기준으로 workflow/artifact-coverage-matrix.md를 갱신하고 Missing required artifact를 모두 찾아줘. Missing은 설계 closure blocker로 표시해.`
+
+**Korean stakeholder package**
+- `현재 산출물을 바탕으로 한국어 Stakeholder Summary, Decision Dashboard, Implementation Readiness Report, Stakeholder Action Plan을 생성/갱신해줘. 기술 용어는 English 유지하고 CX/UX/PM/Client/Server/QA/Security/Ops별 해야 할 일과 출력 산출물을 명시해.`
+
+**Baseline regeneration**
+- `개선된 v1.0.2 규칙 기준으로 기존 arch 산출물을 재검토해. 영어로 된 공유 산출물은 한국어로 바꾸고, Source Record가 요약집이면 Source-to-Design Impact로 보강하고, 누락 산출물은 artifact-coverage-matrix에 Missing으로 등록한 뒤 필요한 문서를 생성해. 마지막에 archdev check와 report 기준의 남은 gap을 정리해.`

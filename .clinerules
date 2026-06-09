@@ -1,0 +1,51 @@
+# Cline Bootstrap Rule — YSDA Arch Harness (설계/업무용)
+
+> 이 파일은 Cline이 워크스페이스를 열 때 자동 로드된다. **세션 시작 시 아래를 먼저 수행한다.**
+
+## 0. 세션 시작 시 (필수)
+1. `AGENTS.md`를 읽는다. (이 harness의 정식 런타임 규칙 — 아래는 그 요약일 뿐, 충돌 시 `AGENTS.md`/`standards/`가 우선)
+2. `workflow/STATUS.md`를 읽어 현재 phase·active unit·블로커를 파악한다.
+3. 필요 시 `standards/ysda-arch-harness-common.md`, `standards/ysda-arch-design-standard.md`,
+   `standards/artifact-lifecycle.md`, `templates/README.md`를 참조한다.
+4. owner와 **한국어**로 소통하고 보고는 간결하게.
+
+이건 **설계 하네스**다. 산출물은 코드가 아니라 **설계(결정·다이어그램·평가)**. 코딩은 개인용 harness로.
+
+## 1. 핵심 규칙 (AGENTS.md 요약)
+1. **Owner first, 한국어.** 간결 보고.
+2. **설계 우선.** 품질 시나리오(QS) 우선순위 + driver matrix 전에는 구현/프레임워크/데이터스토어 제안 금지. "vibe architecture" 금지.
+3. **품질속성 주도.** latency·memory가 1급 드라이버. 성능 주장은 `arch/quality/latency-budget.md`/`memory-budget.md`의 owner 승인 값 인용, 승인 전엔 `<TBD>`. "충분히 빠름" 금지, 샘플 값을 제품 목표로 쓰기 금지.
+4. **Mermaid-first.** 모든 구조적 주장은 mermaid 다이어그램 + 한 줄 intent caption. 도면/흐름을 줄글로만 쓰지 않는다. C4 레이어링(Context→Container→Component).
+5. **ADR 게이트.** 비자명 결정은 ADR(MADR + QS 연결 driver matrix). owner만 Accepted로 승격. 승인 후에만 brief/views에 반영.
+6. **No push / No delete** without owner 승인 / 명시 ADR.
+7. **Handoff redaction.** 공유 번들은 내부 경로·식별자·시크릿·원문·미승인 성능값 redact.
+8. **원본 보존.** 기존 자료 흡수 시 원본은 `arch/sources/originals/`에 그대로, LLM-readable 정리물은 `arch/sources/normalized/`에 **Source Record**로 별도 저장. 정리물 ≠ 원본. 각 Source Record는 **출처·원본 작성/갱신일·수집 시각** 표기. (`templates/source-record.md`)
+9. **Stakeholder-friendly(요약 아님).** 공유 산출물은 **`한눈에` 절 + mermaid + `용어(Glossary)`**. **모든 stakeholder가 정렬·합의·실행**할 수 있게(설계 의도/선택 이유/기대 효과/영향 범위/고려사항). 쉬움 ≠ 정보 손실. "비전문가/임원도 이해" 같은 낮춤 표현 금지.
+10. **한국어 우선(Korean-first).** stakeholder가 보는 모든 산출물의 서술은 **기본 한국어**, 기술 용어만 영어. **Source Record(SRC)도 한국어로 작성한다.** 영어 서술로 산출물 쓰지 않는다.
+11. **누가 무엇을.** 최종 baseline엔 CX/UX/PM/Client/Server/QA/Security/Ops 담당자별 실행 항목(`arch/stakeholder-action-plan.md`)을 포함한다.
+12. **이해도 테스트.** 산출물은 (왜 필요/안 하면 문제/무슨 선택/왜 다른 선택 안 함/누가 무엇을) 5문항에 답한다.
+
+## 2. 기존 과제(소스 없음) 작업 규칙
+- 소스로 검증 못 하므로 **모든 as-is는 가정(Assumption)**. owner/SME 확인 후에만 Verified.
+- 미확인 항목은 단정하지 말고 **가정으로 명세**한다(`templates/assumption-register.md` → `arch/assumptions/register.md`): ID·근거(EV)·신뢰도·Blast Radius·**담당자 확인 질문**·상태.
+- **가정이 틀릴 수 있으므로** load-bearing 가정(Low신뢰도+High영향)은 **분기 후보를 2개 이상** 설계한다(단일 후보 확정 금지).
+- 모르면 비워두지 말고 "모름"으로 표시하고 확인 질문으로 환원. **지어내지 않는다.**
+
+## 3. 작업 사이클 (매 단위)
+1. STATUS + active phase 산출물 먼저 읽기.
+2. active unit 식별(phase step / QS / ADR / evaluation).
+3. QS 우선순위 전에 솔루션으로 점프 금지.
+4. 산출물 생성 — mermaid + 명시적 Non-Goals.
+5. 결정은 ADR(QS 연결 driver matrix)로.
+6. 커밋 전 `python scripts/archdev.py check` 통과(필수 게이트: provenance / 가정 명세 / 분기 후보 / 원본 보존 / 접근성).
+7. 산출물·다이어그램·traceability·STATUS가 일치할 때만 커밋. owner 승인 없이 push 금지.
+8. 간결 보고: phase / 변경 산출물 / 열린 결정 / 다음 액션.
+
+## 4. 자주 쓰는 단축 명령
+- `기존 설계도면/모듈설명으로 as-is부터 시작하자: <과제>`
+- `originals/_manifest.md 보고 각 원본을 출처·타임스탬프 붙인 Source Record로 정리해줘`
+- `미확인 항목을 가정(AS-)으로 명세하고 신뢰도·blast·확인질문을 채워줘`
+- `load-bearing 가정별로 분기 후보 구조를 따로 설계해줘`
+- `모든 stakeholder가 이해하게 한국어로 한눈에 절 + mermaid + 용어표로 정리해줘 (요약 말고)`
+- `SRC는 한국어로, 설계 영향(요구/제약/위험/가정/확인질문/아키텍처 영향) 중심으로 작성해줘`
+- `archdev check` / `archdev report`
