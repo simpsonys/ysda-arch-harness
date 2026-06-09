@@ -1,0 +1,31 @@
+name: Release starter
+
+# v* 태그 push 시 신규 과제용 starter zip을 빌드해 GitHub Release 자산으로 올린다.
+#   git tag v1.0.3 && git push origin v1.0.3
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Self-hosted compliance check
+        run: python scripts/archdev.py check
+      - name: Build starter zips (design + audit)
+        run: |
+          python scripts/build_release.py --mode design --out dist
+          python scripts/build_release.py --mode audit  --out dist
+      - name: Create Release and upload starter zips
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          NOTES="신규 과제용 starter. 압축 해제 후 workflow/STATUS.md owner/이름 설정 -> python scripts/archdev.py check. 기존(소스 없는) 과제는 -audit.zip + templates/as-is-intake.md(Phase 0)부터."
+          gh release create "$TAG" --title "ysda-arch-harness $TAG" --notes "$NOTES" dist/*.zip \
+            || gh release upload "$TAG" dist/*.zip --clobber

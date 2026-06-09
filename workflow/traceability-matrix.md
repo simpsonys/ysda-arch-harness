@@ -1,12 +1,8 @@
-# 추적성 매트릭스 (Traceability) — Arch Harness
+# 추적성 매트릭스 (Traceability) — self-hosted
 
-Common §A13. 모든 **우선순위 QS** 는 ADR과 평가 행을 가져야 Design Baseline(§D8) 승인 가능.
+하네스 자체 진화의 결정 추적. (적용 프로젝트의 QS→ADR→view 추적은 starter의 동명 파일에서.)
 
-| Use case / Quality scenario | 결정 드라이버 | ADR | 아키텍처 요소 / 다이어그램 | 평가 결과 (budget 대비) |
+| 변경 동인 | 결정 | ADR | 반영 위치 | 상태 |
 |---|---|---|---|---|
-| QS-001 Latency (`p95 ≤ <P95_TARGET_MS>`) | Latency | [ADR-00x] | `arch/views/latency-critical-path.md` | <만족/조건부/미달> |
-| QS-002 Memory (`<MAX_RSS_MB>`) | Memory | [ADR-00x] | `arch/views/memory-lifecycle.md` | <만족/조건부/미달> |
-| (하네스 자체) v1.0.0 초기 baseline | Maintainability | [ADR-001](../arch/adr-001-v1.0.0-initial-arch-harness-baseline.md) | Common/mode 분리 | Passed |
-| (하네스 자체) v1.0.1 consistency polish | Safety / Consistency | [ADR-002](../arch/adr-002-v1.0.1-consistency-polish.md) | lifecycle / sidecar / validation | Passed |
-
-> harness v1.0.1
+| 업무 적용/brownfield/가정/원본/접근성 | mode-aware + 게이트 다수 | (v1.0.2 누적) | AGENTS/standards/archdev | Accepted |
+| 독자 모델·한국어 우선·낮춤표현 금지 | Stakeholder-first | ADR-003 (v1.0.3) | AGENTS/templates/archdev | Accepted |
